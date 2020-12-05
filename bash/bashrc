@@ -106,10 +106,10 @@ export MAN_POSIXLY_CORRECT=1
 export PS1="\$(exitstatus) ${PS1}"
 
 export EDITOR="/usr/bin/vim"
-#export LESS="-XNriJ"
 
-# Tells 'less' not to paginate if less than a page (-F) and disables sending the
-# termcap initialization and deinitialization strings to the terminal (-X)
-export LESS="-F -X $LESS"
+# -F: do not paginate if less than a page
+# -R: display colors correctly
+# -X: disable sending the termcap init and deinit strings to the terminal
+export LESS="-FRX $LESS"
 
 export PATH="${HOME}/bin:/sbin:/usr/sbin:$PATH"
