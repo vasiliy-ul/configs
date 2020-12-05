@@ -1,0 +1,17 @@
+MAILDIR=$HOME/.maildir
+LOGFILE=$HOME/.procmaillog
+LOGABSTRACT=no
+#VERBOSE=on
+VERBOSE=off
+NL="
+"
+
+# sample filter
+#:0
+#* ^From.*email@example.org
+#* ^Subject.*\[SCM NOTICE\] \[Notice\]
+#spam/
+
+# default filter
+:0
+inbox/
