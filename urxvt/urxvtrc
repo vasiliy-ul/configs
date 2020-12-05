@@ -1,0 +1,74 @@
+urxvt.title: URxvt-terminal
+urxvt.saveLines: 1000
+urxvt.geometry: 100x40
+
+!URxvt.font: xft:Terminus:pixelsize=15:antialias=true
+!URxvt.boldFont: xft:Terminus:bold:pixelsize=15:antialias=true
+URxvt.font: xft:mono:pixelsize=15:antialias=true
+URxvt.boldFont: xft:mono:bold:pixelsize=15:antialias=true
+!URxvt.letterSpace: -3
+
+urxvt*background: black
+!urxvt*foreground: #34E124
+urxvt*foreground: white
+
+urxvt*color0: #000000
+urxvt*color1: #a35757
+urxvt*color2: #7a8672
+urxvt*color3: #968a38
+urxvt*color4: #414171
+urxvt*color5: #963c59
+urxvt*color6: #418179
+urxvt*color7: #bebebe
+urxvt*color8: #666666
+urxvt*color9: #FF3E25
+urxvt*color10: #c5f779
+urxvt*color11: #FBF170
+urxvt*color12: #4186be
+urxvt*color13: #cf9ebe
+urxvt*color14: #71bebe
+urxvt*color15: #F5F5F5
+
+URxvt.underlineColor: yellow
+
+URxvt.cursorBlink: false
+!URxvt.cursorColor: red
+URxvt.cursorColor: yellow
+
+!URxvt*termName:xterm
+
+URxvt.transparent: true
+!URxvt.shading: 100
+!URxvt.shading: 50
+!URxvt.fadeColor: #666666
+URxvt.tintColor: #3F3F3F
+URxvt.fading: 42
+
+Urxvt.scrollBar: true
+!URxvt.scrollstyle: plain
+!URxvt.scrollColor: #C9BD9A
+!URxvt.troughColor: #000000
+URxvt.scrollBar_right: true
+!URxvt.scrollBar_floating: false
+
+!URxvt.tabbar-fg: 1
+!URxvt.tabbar-bg: 7
+!URxvt.tab-fg: 7
+!URxvt.tab-bg: -1
+
+urxvt.perl-ext-common: default,tabbed,matcher,clipboard
+
+URxvt.keysym.M-c: perl:clipboard:copy
+URxvt.keysym.M-v: perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+
+urxvt.matcher.button: 2
+urxvt.matcher.pattern.0: (?:https?:\\/\\/|ftp:\\/\\/|news:\\/\\/|mailto:|file:\\/\\/|\\bwww\\.)\n\
+[a-zA-Z0-9\\x{0410}-\\x{044F}\\-\\@;\\/?:&=%\\$_.+!*\\x27,~#]*\n\
+(\n\
+\\([a-zA-Z0-9\\x{0410}-\\x{044F}\\-\\@;\\/?:&=%\\$_.+!*\\x27,~#]*\\)| # Allow a pair of matched parentheses\n\
+[a-zA-Z0-9\\x{0410}-\\x{044F}\\-\\@;\\/?:&=%\\$_+*~] # exclude some trailing characters (heuristic)\n\
+)+
+
+urxvt.url-launcher: /usr/bin/chromium
+urxvt.underlineURLs: true
