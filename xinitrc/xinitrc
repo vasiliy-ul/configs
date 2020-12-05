@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# keyboard layout switching
+/usr/bin/setxkbmap -layout "us,ru" -variant ",winkeys" -option "grp_led:scroll,grp:caps_toggle"
+
+# activate numlock
+numlockx &
+
+# screensaver/locker
+#/usr/bin/xscreensaver -nosplash &
+xautolock -time 15 -locker slock -detectsleep &
+
+if [ -s ~/.Xmodmap ]; then
+    xmodmap ~/.Xmodmap
+fi
+
+# start PulseAudio (switched to systemd --user activation)
+#/usr/bin/start-pulseaudio-x11
+
+exec /usr/bin/awesome 2>&1 > ~/awesome.log
