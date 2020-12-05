@@ -1,0 +1,288 @@
+" Use Vim settings, rather then Vi settings (much better!).
+" This must be first, because it changes other options as a side effect
+set nocompatible
+
+" Run plugins
+":runtime! <FILE>
+
+" Enable loading filetype and indentation plugins
+filetype plugin indent on
+
+" Colorscheme
+colorscheme slate
+hi Visual term=reverse cterm=reverse guibg=Grey
+
+" Split below
+set splitbelow
+
+" Enable mouse
+set mouse=a
+set mousemodel=popup
+set mousehide " hide mouse when typing text
+
+" Number of colors
+set t_Co=256
+
+" Autochdir
+set autochdir
+
+" Tags
+set tags=tags;
+
+" Turn off any bells
+set noerrorbells
+set novisualbell
+set t_vb=
+
+" Syntax and indent options
+syntax on
+set cindent
+set smartindent
+set autoindent
+
+" No swap or backup files
+set noswapfile
+set nobackup
+
+" Encodings
+set fileencodings=utf8,cp1251,cp866,koi8r
+set encoding=utf8
+set termencoding=utf8
+
+" Encoding menu and command-line completion
+set wildmenu
+set wildcharm=<Tab>
+menu Encoding.&koi8-r :e ++enc=koi8-r<CR>
+menu Encoding.&windows-1251 :e ++enc=cp1251<CR>
+menu Encoding.&cp866 :e ++enc=cp866<CR>
+menu Encoding.&utf-8 :e ++enc=utf8<CR>
+map <F8> :emenu Encoding.<Tab>
+
+" Fileformats
+set fileformats=unix,dos,mac
+set fileformat=unix
+
+" Backspace and background
+set backspace=indent,eol,start
+set background=dark
+
+" History
+set history=10000
+
+" Clipboard
+set clipboard=unnamed
+"set clipboard=unnamedplus
+
+" Do NOT unload buffer when switch to another one
+" this allows to edit several files in the same time without having to save
+" them each time you switch between them
+" set hidden
+set nohidden
+
+" Display unprintable characters
+set list
+set listchars=tab:→→,trail:.
+
+" Highlight matching braces
+set showmatch
+set matchtime=1
+
+" Default TAB size
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+
+" Expand TAB to spaces
+set expandtab
+set smarttab
+
+" Dont wrap lines
+set nowrap
+
+" Search options
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set gdefault
+
+" Status line
+set laststatus=2
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%l,%v][%p%%]\ [LEN=%L]
+
+" Ruler (???)
+set ruler
+set rulerformat=%15(%l,%c\ %p%%%)
+
+" Split options
+set splitright
+
+" Tabs options
+set showtabline=2
+set tabpagemax=100
+
+" Highlight current line/column
+"set cursorline
+"set cursorcolumn
+
+" Show line numbers
+" set number
+
+" Show relative line numbers
+set rnu
+
+" Show title
+set title
+
+" Do not clear the screen after Vim termination
+"set t_ti= t_te=
+"au FileType man set t_ti= t_te=
+
+" Other stuff
+set ttyfast
+set nomodeline
+set showcmd
+set showmode
+set magic
+
+" Word-completion (Ctrl+Space)
+imap <C-@> <C-p>
+
+" Save/close mappings
+nmap <C-c>s :w<CR>
+nmap <C-c>q :q<CR>
+nmap <C-c>Q :q!<CR>
+
+" Tabnext/tabprev mappings
+nmap <Tab> :tabn<CR>
+nmap <S-Tab> :tabp<CR>
+nmap <C-PageUp> :tabn<CR>
+nmap <C-PageDown> :tabp<CR>
+
+" Move to the right/left/up/down window
+nmap <C-Right> <C-W>l
+nmap <C-Left> <C-W>h
+nmap <C-Up> <C-W>k
+nmap <C-Down> <C-W>j
+nmap <C-h> <C-W>h
+nmap <C-j> <C-W>j
+nmap <C-k> <C-W>k
+nmap <C-l> <C-W>l
+
+" Resize windows
+nmap <C-+> <C-W>+
+nmap <C--> <C-W>-
+
+" No arrows allowed!!!
+"map <Left> <nop>
+"map <Right> <nop>
+"map <Up> <nop>
+"map <Down> <nop>
+
+" Copy/paste to/from xclipboard
+vmap <C-y> "+y
+nmap <C-p> "+p
+
+" C/C++ mappings
+au FileType c,cc,cpp,CXX,h,hpp inoremap #" #include ""<Esc>i
+au FileType c,cc,cpp,CXX,H,hpp inoremap #< #include <><Esc>i
+au FileType c,cc,cpp,CXX,h,hpp inoremap #d #define
+au FileType c,cc,cpp,CXX,h,hpp inoremap #E #endif /*  */<Esc>hhi
+au FileType c,cc,cpp,CXX,h,hpp inoremap #m int main(int argc, char *argv[])<CR>{<CR>return 0;<CR>}
+au FileType c,cc,cpp,CXX,h,hpp nnoremap <silent> <F9> :TlistToggle<CR>
+
+" Stuff for SWAP
+au BufRead,BufNewFile *.def,*.inc set ft=c
+au FileType def,inc set ft=c
+
+" Highlight long lines (after 80 chars)
+au FileType text setlocal textwidth=80
+"au FileType c,cc,cpp,CXX,h,hpp,python,pl,sh,def,inc set cc=80
+"autocmd BufWinEnter * let w:m1=matchadd('ErrorMsg', '\%>80v.\+', -1)
+au FileType c,cc,cpp,CXX,h,hpp,python,pl,sh,def,inc let w:m1=matchadd('ErrorMsg', '\%>80v.\+', -1)
+
+" Make mappings
+au FileType c,cc,cpp,CXX,h,hpp imap <C-c>m <Esc>:make!<CR>a
+au FileType c,cc,cpp,CXX,h,hpp nmap <C-c>m :make!<CR>
+au FileType c,cc,cpp,CXX,h,hpp imap <C-c>c <Esc>:make! clean<CR>a
+au FileType c,cc,cpp,CXX,h,hpp nmap <C-c>c :make! clean<CR>
+au FileType c,cc,cpp,CXX,h,hpp imap <C-c>l <Esc>:clist<CR>a
+au FileType c,cc,cpp,CXX,h,hpp nmap <C-c>l :clist<CR>
+au FileType c,cc,cpp,CXX,h,hpp nmap <C-c>n :cnext<CR>
+au FileType c,cc,cpp,CXX,h,hpp nmap <C-c>p :cprev<CR>
+
+" Expandtab options
+"au FileType c,cc,cpp,CXX,h,hpp set noexpandtab
+"au FileType c,cc,cpp,CXX,h,hpp set shiftwidth=8
+"au FileType c,cc,cpp,CXX,h,hpp set tabstop=8
+"au FileType c,cc,cpp,CXX,h,hpp set softtabstop=8
+au FileType c,cc,cpp,CXX,h,hpp set expandtab
+au FileType c,cc,cpp,CXX,h,hpp set shiftwidth=4
+au FileType c,cc,cpp,CXX,h,hpp set tabstop=4
+au FileType c,cc,cpp,CXX,h,hpp set softtabstop=4
+au FileType py set expandtab
+
+" ex command for toggling hex mode - define mapping if desired
+command -bar Hexmode call ToggleHex()
+
+" helper function to toggle hex mode
+function ToggleHex()
+    " hex mode should be considered a read-only operation
+    " save values for modified and read-only for restoration later,
+    " and clear the read-only flag for now
+    let l:modified=&mod
+    let l:oldreadonly=&readonly
+    let &readonly=0
+    let l:oldmodifiable=&modifiable
+    let &modifiable=1
+    if !exists("b:editHex") || !b:editHex
+        " save old options
+        let b:oldft=&ft
+        let b:oldbin=&bin
+        " set new options
+        setlocal binary " make sure it overrides any textwidth, etc.
+        let &ft="xxd"
+        " set status
+        let b:editHex=1
+        " switch to hex editor
+        %!xxd
+    else
+        " restore old options
+        let &ft=b:oldft
+        if !b:oldbin
+            setlocal nobinary
+        endif
+        " set status
+        let b:editHex=0
+        " return to normal editing
+        %!xxd -r
+    endif
+    " restore values for modified and read only state
+    let &mod=l:modified
+    let &readonly=l:oldreadonly
+    let &modifiable=l:oldmodifiable
+endfunction
+
+" Gvim settings
+if has("gui_running")
+    " no menu and toolbar
+    set guioptions-=m
+    set guioptions-=T
+    " no scrollbars
+    set guioptions-=r
+    set guioptions-=l
+    " use console dialogs
+    set guioptions+=c
+    "антиалиасинг для шревтоф
+    " hide cursor
+    set mousehide
+    " no unneded escape sequnces in :shell
+    set noguipty
+    " highlight current line
+    set cursorline
+    " fonts settings
+    set antialias
+    "set guifont=Terminus
+    " colorscheme
+    colorscheme ron
+endif
