@@ -1,2 +1,2 @@
 # configs
-Configuration files for various tools and utilities
+Configuration files and helpers for various tools and utilities
