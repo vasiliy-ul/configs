@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -exo pipefail
+
+CONF=${2:-openvpn} # /etc/openvpn/${CONF}.conf
+UNIT=openvpn@${CONF}
+
+case $1 in
+    u|up|start)
+        sudo -k systemctl start ${UNIT}
+        ;;
+    d|down|stop)
+        sudo -k systemctl stop ${UNIT}
+        ;;
+    r|reconnect|reload)
+        # Copy to /usr/lib/systemd/system-sleep
+        sudo -k systemctl reload ${UNIT}
+        # Alternative: /usr/bin/pkill --signal SIGHUP --exact openvpn
+        ;;
+    j|jf|journal|l|lf|log)
+        [[ $1 == *f ]] && FOLLOW=-f
+        journalctl -b -u ${UNIT} ${FOLLOW}
+        ;;
+    st|status|*)
+        systemctl status ${UNIT}
+        ;;
+esac
