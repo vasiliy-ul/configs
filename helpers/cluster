@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -exo pipefail
+
+CRI_SOCKET=/var/run/dockershim.sock
+
+case $1 in
+    u|up|start)
+        sudo -k kubeadm init \
+            --pod-network-cidr=10.244.0.0/16 \
+            --apiserver-advertise-address=192.168.1.15 \
+            --cri-socket=${CRI_SOCKET} \
+            --ignore-preflight-errors=NumCPU,Swap,Hostname,Service-Kubelet,SystemVerification
+        ;;
+    d|down|stop)
+        sudo -k kubeadm reset --cri-socket=${CRI_SOCKET}
+        ;;
+    m|mw)
+        # Master Node as a Worker:
+        kubectl taint nodes --all node-role.kubernetes.io/master-
+        ;;
+esac
