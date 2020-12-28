@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -exo pipefail
+set -euxo pipefail
 
 CONF=${2:-openvpn} # /etc/openvpn/${CONF}.conf
 UNIT=openvpn@${CONF}
@@ -19,7 +19,7 @@ case $1 in
         ;;
     j|jf|journal|l|lf|log)
         [[ $1 == *f ]] && FOLLOW=-f
-        journalctl -b -u ${UNIT} ${FOLLOW}
+        journalctl -b -u ${UNIT} ${FOLLOW-}
         ;;
     st|status|*)
         systemctl status ${UNIT}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -exo pipefail
+set -euxo pipefail
 
 CRI_SOCKET=/var/run/dockershim.sock
 
