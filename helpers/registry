@@ -17,6 +17,6 @@ case $1 in
         docker stop ${NAME} && docker rm -v ${NAME}
         ;;
     st|status|*)
-        curl http://localhost:${PORT}/v2/_catalog | json_pp
+        curl http://localhost:${PORT}/v2/_catalog | jq
         ;;
 esac
