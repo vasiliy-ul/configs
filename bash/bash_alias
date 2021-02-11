@@ -5,7 +5,11 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 alias diff='colordiff'
-alias grep='grep --exclude-dir=.git --exclude-dir=.svn --color=auto'
+
+GREP_EXCLUDES="--exclude-dir=.git --exclude-dir=.svn --exclude=tags"
+alias grep='grep ${GREP_EXCLUDES} --color=auto'
+alias fgrep='fgrep ${GREP_EXCLUDES} --color=auto'
+alias egrep='egrep ${GREP_EXCLUDES} --color=auto'
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -16,10 +20,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias ls='ls --color=auto'
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
 fi
 
 # Add an "alert" alias for long running commands.  Use like so:
