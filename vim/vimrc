@@ -221,6 +221,7 @@ au FileType c,cc,cpp,CXX,h,hpp set shiftwidth=4
 au FileType c,cc,cpp,CXX,h,hpp set tabstop=4
 au FileType c,cc,cpp,CXX,h,hpp set softtabstop=4
 au FileType py set expandtab
+au FileType go set noexpandtab
 
 " ex command for toggling hex mode - define mapping if desired
 command -bar Hexmode call ToggleHex()
