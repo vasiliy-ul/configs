@@ -4,13 +4,12 @@ urxvt.geometry: 100x40
 
 !URxvt.font: xft:Terminus:pixelsize=15:antialias=true
 !URxvt.boldFont: xft:Terminus:bold:pixelsize=15:antialias=true
-URxvt.font: xft:mono:pixelsize=15:antialias=true
-URxvt.boldFont: xft:mono:bold:pixelsize=15:antialias=true
+URxvt.font: xft:mono:pixelsize=20:antialias=true
+URxvt.boldFont: xft:mono:bold:pixelsize=20:antialias=true
 !URxvt.letterSpace: -3
 
 urxvt*background: black
-!urxvt*foreground: #34E124
-urxvt*foreground: white
+urxvt*foreground: grey
 
 urxvt*color0: #000000
 urxvt*color1: #a35757
