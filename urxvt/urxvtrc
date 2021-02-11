@@ -55,11 +55,14 @@ URxvt.scrollBar_right: true
 !URxvt.tab-fg: 7
 !URxvt.tab-bg: -1
 
-urxvt.perl-ext-common: default,tabbed,matcher,clipboard
+urxvt.perl-ext-common: default,tabbed,matcher,clipboard,font-size
 
 URxvt.keysym.M-c: perl:clipboard:copy
 URxvt.keysym.M-v: perl:clipboard:paste
 URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+
+URxvt.keysym.C-Up:     perl:font-size:increase
+URxvt.keysym.C-Down:   perl:font-size:decrease
 
 urxvt.matcher.button: 2
 urxvt.matcher.pattern.0: (?:https?:\\/\\/|ftp:\\/\\/|news:\\/\\/|mailto:|file:\\/\\/|\\bwww\\.)\n\
