@@ -13,7 +13,13 @@ case $1 in
             --ignore-preflight-errors=NumCPU,Swap,Hostname,Service-Kubelet,SystemVerification
         ;;
     d|down|stop)
-        sudo -k kubeadm reset --cri-socket=${CRI_SOCKET}
+        sudo -k kubeadm reset --cri-socket=${CRI_SOCKET} \
+            && rm -i ${HOME}/.kube/config
+        ;;
+    c|config)
+        mkdir -p $HOME/.kube
+        sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config \
+            && sudo chown $(id -u):$(id -g) $HOME/.kube/config
         ;;
     m|mw)
         # Master Node as a Worker:
