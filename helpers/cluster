@@ -3,6 +3,7 @@
 set -euxo pipefail
 
 CRI_SOCKET=/var/run/dockershim.sock
+#CRI_SOCKET=/var/run/crio/crio.sock
 
 case $1 in
     u|up|start)
