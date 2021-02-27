@@ -50,6 +50,15 @@ Urxvt.scrollBar: true
 URxvt.scrollBar_right: true
 !URxvt.scrollBar_floating: false
 
+! do not scroll with output
+URxvt*scrollTtyOutput: false
+
+! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
+URxvt*scrollWithBuffer: true
+
+! scroll back to the bottom on keypress
+URxvt*scrollTtyKeypress: true
+
 !URxvt.tabbar-fg: 1
 !URxvt.tabbar-bg: 7
 !URxvt.tab-fg: 7
