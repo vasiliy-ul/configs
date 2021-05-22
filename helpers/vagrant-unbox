@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+VAGRANT_BOX="$1"
+VAGRANT_IMG="box.img"
+QEMU_IMG="$(basename ${VAGRANT_BOX}).qcow2"
+
+# Extract the image
+tar -xzvf ${VAGRANT_BOX} ${VAGRANT_IMG}
+
+# Convert to qcow2
+qemu-img convert -O qcow2 ${VAGRANT_IMG} ${QEMU_IMG}
+
+# Cleanup
+rm -f ${VAGRANT_IMG}
