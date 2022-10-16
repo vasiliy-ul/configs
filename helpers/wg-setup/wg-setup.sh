@@ -6,6 +6,9 @@ set -euo pipefail
 SERVER_IPADDR=${1}
 SERVER_PORT=34567
 
+# Number of client configs to generate
+NUM_CLIENTS=${2:-1}
+
 # Yandex DNS
 DNS1=77.88.8.88
 DNS2=77.88.8.2
@@ -41,7 +44,7 @@ function gen::server::peer()
     cat >> ${config} <<EOF
 [Peer]
 PublicKey = ${publickey}
-AllowedIPs = ${ipaddr}
+AllowedIPs = ${ipaddr}/32
 EOF
 }
 
@@ -57,7 +60,7 @@ function gen::client::interface()
     # Note: overwrite the existing file
     cat > ${config} <<EOF
 [Interface]
-Address = ${ipaddr}
+Address = ${ipaddr}/24
 Privatekey = ${privatekey}
 DNS = ${DNS1}, ${DNS2}
 EOF
@@ -87,30 +90,31 @@ umask 077
 #rm -Ivr /tmp/wg-conf-*
 WGCONF_DIR=$(mktemp --directory --tmpdir "wg-conf-XXXXXXXXXX")
 
-# Server vars
-SERVER_DIR=$(mktemp --directory --tmpdir=${WGCONF_DIR} "server-XXXXXXXXXX")
+SERVER_DIR=${WGCONF_DIR}/server
 SERVER_CONFIG=${SERVER_DIR}/wg0.conf
 SERVER_PRIVATEKEY=$(wg genkey)
 SERVER_PUBLICKEY=$(echo ${SERVER_PRIVATEKEY} | wg pubkey)
 SERVER_POSTUP=${SERVER_DIR}/post-up
 
-# Client vars
-CLIENT_DIR=$(mktemp --directory --tmpdir=${WGCONF_DIR} "client-XXXXXXXXXX")
-CLIENT_CONFIG=${CLIENT_DIR}/wg1.conf
-CLIENT_PRIVATEKEY=$(wg genkey)
-CLIENT_PUBLICKEY=$(echo ${CLIENT_PRIVATEKEY} | wg pubkey)
-CLIENT_IPADDR=10.20.0.101/24
-CLIENT_QR=${CLIENT_DIR}/qr.txt
-
-# WireGuard server config
+mkdir -p ${SERVER_DIR}
+cp post-up ${SERVER_POSTUP}
 gen::server::interface ${SERVER_CONFIG} ${SERVER_PRIVATEKEY} ${SERVER_POSTUP}
-gen::server::peer ${SERVER_CONFIG} ${CLIENT_PUBLICKEY} ${CLIENT_IPADDR}
-cp post-up ${SERVER_DIR}/
 
-# WireGuard client config
-gen::client::interface ${CLIENT_CONFIG} ${CLIENT_IPADDR} ${CLIENT_PRIVATEKEY}
-gen::client::peer ${CLIENT_CONFIG} ${SERVER_PUBLICKEY} ${SERVER_IPADDR}
-qrencode -t ansiutf8 < ${CLIENT_CONFIG} > ${CLIENT_QR}
+for i in $(seq ${NUM_CLIENTS}); do
+    CLIENT_DIR=${WGCONF_DIR}/client${i}
+    CLIENT_CONFIG=${CLIENT_DIR}/wg${i}.conf
+    CLIENT_PRIVATEKEY=$(wg genkey)
+    CLIENT_PUBLICKEY=$(echo ${CLIENT_PRIVATEKEY} | wg pubkey)
+    CLIENT_IPADDR=10.20.0.10${i}
+    CLIENT_QR=${CLIENT_DIR}/qr.txt
+
+    gen::server::peer ${SERVER_CONFIG} ${CLIENT_PUBLICKEY} ${CLIENT_IPADDR}
+
+    mkdir -p ${CLIENT_DIR}
+    gen::client::interface ${CLIENT_CONFIG} ${CLIENT_IPADDR} ${CLIENT_PRIVATEKEY}
+    gen::client::peer ${CLIENT_CONFIG} ${SERVER_PUBLICKEY} ${SERVER_IPADDR}
+    qrencode -t ansiutf8 < ${CLIENT_CONFIG} > ${CLIENT_QR}
+done
 
 SSH_OPTS="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 cat <<EOF
